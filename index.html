@@ -10,13 +10,15 @@
 </head>
 <body>
 <header>
-    <div class="container" id="wrapper">
+    <div id="wrapper">
         <h1>Todo List</h1>
         <!-- Todo Input -->
-        <input id="taskInput"><button id="addButton">Add task</button>
-        
+        <input id="task" placeholder="Enter Your Task"><button id="add">Add task</button>
         <!-- Todo List -->
-        <div class="todos"></div>
+        <div class="todo-container">
+            <ul id="todoList"></ul>
+        </div>
+        
 
         <!-- Linking JavaScript -->
         <script src="js/script.js"></script>

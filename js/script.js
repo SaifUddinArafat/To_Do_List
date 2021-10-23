@@ -1,11 +1,9 @@
+/*########################## Getting The todo List and Stroing to Local Storage ###############################*/
 function get_todos(){
-    //creating a blank todo array
-    var todos = new Array;
+    var todos = new Array;//creating a blank todo array
+    var todos_str = localStorage.getItem('todoList');//getting existing item stored in localStorage using localStorage.getItem
 
-    //getting existing item stored in localStorage using localStorage.getItem
-    var todos_str = localStorage.getItem('todoList');
-
-    //getting the todos
+    //Getting The Todos
     if(todos_str !== null){
         todos = JSON.parse(todos_str); //JSON.parse() convert JSON String of Browser to JavaScript data
     }
@@ -13,6 +11,10 @@ function get_todos(){
     return todos; //return the data from localstorage
 }
 
+
+/*########################## Adding New Item to Todo List ###############################*/
+document.getElementById('add').addEventListener('click', add);//Event Listener for Add button
+//Function for adding new task
 function add(){
     var task = document.getElementById('task').value;
     var todos = get_todos(); //retrive existing todo item from database(localStorage)
@@ -21,30 +23,15 @@ function add(){
     //JSON.stringify enables us to return string from localstorage
     
     clearDefault();
+    
+    
     show();
 
     return false; //It adovid any Furthur action created by click event
 }
 
-//clearing the input box after adding the task
-function clearDefault(){
-    var a = document.getElementById('task'); //getting the input
-    a.value = ""; //setting input to null
-}
+/*########################## Displaying current todo list ###############################*/
 
-//deleting item
-function remove(){
-    var id = this.getAttribute('id'); //getting id of the item that is clicked to remove
-    var todos = get_todos(); //getting the todo list
-    todos.splice(id, 1); //removing the item
-    localStorage.setItem('todoList', JSON.stringify(todos));
-  
-    show();
-
-    return false; //avoiding any further action after showing the result
-}
-
-//Displaying current todo list
 function show(){
     var todos = get_todos();
 
@@ -70,8 +57,47 @@ function show(){
 
 }
 
-document.getElementById('add').addEventListener('click', add);
-//document.getElementById('remove').addEventListener('click', remove);
+show(); //showing the list of Todos stored inside localStorage
 
 
-show();
+/*########################## Cleaning Default Input ###############################*/
+
+function clearDefault(){
+    var a = document.getElementById('task'); //getting the input
+    a.value = ""; //setting input to null
+}
+
+
+/*########################## Removing Task ###############################*/
+
+function remove(e){
+    var todos = get_todos(); //getting the todo list from localStorage
+    var item = e.target; //selecting the trash button console.log(item) to check
+    if(item.classList[1] == "fa-trash"){
+        const todo = item.parentElement; //getting the parent element of item console.log(todo) to check
+        const todoitem = todo.parentElement.innerText; //getting the innertext from parent element of todo console.log(todo) to check
+        var todoIndex = todos.indexOf(todoitem); //getting the index no of the todoitem that we selected
+        
+        todos.splice(todoIndex, 1); //removing the item from localStorage using todos.splice() method. console.logtodos.splice(todoIndex, 1); to check
+        localStorage.setItem('todoList', JSON.stringify(todos)); //updating localStorage after removing the item through localStorage.setItem() method
+    }
+
+    
+    show(); //showing the list of Todos stored inside localStorage
+
+    return false; //avoiding any further action after showing the result
+
+}
+
+/*########################## Completed Task ###############################*/
+document.getElementById('todoList').addEventListener('click', complete);
+function complete(e){
+    var todos = get_todos();
+    var item = e.target;
+    if(item.classList[1]=="fa-check"){
+        const todo = item.parentElement;
+        const todoitem = todo.parentElement;
+        todoitem.classList.toggle('completed');
+    }
+
+}

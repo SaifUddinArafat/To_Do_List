@@ -115,14 +115,14 @@ function filterTodo(e){
         //using switch statement to check the selected value
         switch(e.target.value){
             case "all":
-            /*for understanding the code console log this item 
+            /*//for understanding the code console log this item 
                 console.log(todo);*/
 
                 todo.style.display = "block"; //link the style sheet and set the value of display:block;
                 break;
 
             case "completed":
-            /*for understanding the code console log this item
+            /*//for understanding the code console log this item
                 console.log(todo.classList);
                 console.log(todo.classList.contains('completed'));
             */

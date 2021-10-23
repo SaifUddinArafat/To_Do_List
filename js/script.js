@@ -90,9 +90,9 @@ function remove(e){
 }
 
 /*########################## Completed Task ###############################*/
-document.getElementById('todoList').addEventListener('click', complete);
+
+document.getElementById('todoList').addEventListener('click', complete); //Event Listener for complete button
 function complete(e){
-    var todos = get_todos();
     var item = e.target;
     if(item.classList[1]=="fa-check"){
         const todo = item.parentElement;
@@ -101,3 +101,5 @@ function complete(e){
     }
 
 }
+
+/*########################## Filter Task ###############################*/

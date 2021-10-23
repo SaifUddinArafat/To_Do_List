@@ -1,4 +1,5 @@
-/*########################## Getting The todo List and Stroing to Local Storage ###############################*/
+/*########################## Getting The todo List and String to Local Storage ###############################*/
+
 function get_todos(){
     var todos = new Array;//creating a blank todo array
     var todos_str = localStorage.getItem('todoList');//getting existing item stored in localStorage using localStorage.getItem
@@ -11,8 +12,8 @@ function get_todos(){
     return todos; //return the data from localstorage
 }
 
-
 /*########################## Adding New Item to Todo List ###############################*/
+
 document.getElementById('add').addEventListener('click', add);//Event Listener for Add button
 //Function for adding new task
 function add(){
@@ -39,7 +40,7 @@ function show(){
     for(var i=0; i<todos.length; i++){
         html += 
         `<div class="todo">
-            <li> 
+            <li class="todo"> 
                 ${todos[i]} 
                 <button class="remove" id="button"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 <button class="complete" id="button"><i class="fa fa-check" aria-hidden="true"></i></button>
@@ -98,8 +99,48 @@ function complete(e){
         const todo = item.parentElement;
         const todoitem = todo.parentElement;
         todoitem.classList.toggle('completed');
+        todoitem.parentElement.classList.toggle('completed'); //for filterTodo Function
     }
 
 }
 
 /*########################## Filter Task ###############################*/
+
+document.getElementById('filterTodo').addEventListener('click', filterTodo); //Event Listener for Filtering Task
+function filterTodo(e){
+    const todos = document.getElementById('todoList').childNodes; //getting childNodes of todoList console.log(todos) to check
+
+    //todos is child nodes so we can use forEach() method 
+    todos.forEach(function(todo){
+        //using switch statement to check the selected value
+        switch(e.target.value){
+            case "all":
+            /*for understanding the code console log this item 
+                console.log(todo);*/
+
+                todo.style.display = "block"; //link the style sheet and set the value of display:block;
+                break;
+
+            case "completed":
+            /*for understanding the code console log this item
+                console.log(todo.classList);
+                console.log(todo.classList.contains('completed'));
+            */
+                if(todo.classList.contains('completed')){
+                    todo.style.display = "block"; //link the style sheet and set the value of display:block;
+                }else{
+                    todo.style.display = "none"; //link the style sheet and set the value of display:none;
+                }
+                break;
+
+            case "uncompleted":
+                //if the class of the selected item is not equal to 'completed'
+                if(todo.classList.contains('completed') == false){
+                    todo.style.display = "block"; //link the style sheet and set the value of display:block;
+                }else{
+                    todo.style.display = "none"; //link the style sheet and set the value of display:none;
+                }
+                break;
+        }
+    });
+}
